@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Acerca del proyecto{% endblock %}
+
+{% block contenido %}
+<section class="hero-secundario">
+    <span class="ficha mono">Proyecto municipal N.º 30</span>
+    <h1>Acerca del proyecto</h1>
+</section>
+
+<section class="contenido-texto">
+    <p>
+        La Municipalidad necesita digitalizar la gestión de incidencias urbanas.
+        Actualmente gran parte de la información se mantiene distribuida en
+        distintos registros, lo que dificulta el seguimiento de operaciones,
+        la generación de reportes y la coordinación entre los distintos
+        actores involucrados.
+    </p>
+    <p>
+        Esta primera etapa del proyecto (Evaluación 1) entrega la base técnica:
+        repositorio Git, ambiente virtual, núcleo Django y la aplicación
+        <strong>incidencias_app</strong> con sus rutas propias, página de
+        bienvenida y página de error 404 personalizada. El modelo de datos y
+        las funcionalidades de registro, consulta e indicadores se
+        incorporarán en la siguiente etapa.
+    </p>
+</section>
+{% endblock %}

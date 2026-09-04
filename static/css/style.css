@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+:root {
+    --asfalto: #23261f;
+    --concreto: #edeee7;
+    --papel: #ffffff;
+    --ambar: #f2a71b;
+    --azul-ruta: #1d4e89;
+    --verde-municipal: #3f6c51;
+    --tinta: #20241f;
+    --linea: #d8d8ce;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    background: var(--concreto);
+    color: var(--tinta);
+    line-height: 1.55;
+}
+
+h1, h2, h3 {
+    font-family: 'Overpass', Arial, sans-serif;
+    color: var(--asfalto);
+    margin: 0 0 0.4em;
+    line-height: 1.15;
+}
+
+a { color: var(--azul-ruta); }
+
+.mono {
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+:focus-visible {
+    outline: 3px solid var(--ambar);
+    outline-offset: 2px;
+}
+
+.contenedor {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+    background: var(--asfalto);
+}
+
+.site-header .contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--papel);
+    text-decoration: none;
+    font-family: 'Overpass', Arial, sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.marca svg { flex-shrink: 0; }
+
+.site-header nav {
+    display: flex;
+    gap: 28px;
+}
+
+.site-header nav a {
+    color: #d8dbd2;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.site-header nav a:hover,
+.site-header nav a:focus-visible {
+    color: var(--papel);
+    border-bottom-color: var(--ambar);
+}
+
+/* ---------- Hero ---------- */
+
+.hero { padding: 56px 0 28px; }
+
+.hero .ficha {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--azul-ruta);
+    background: #e4ecf4;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: 2.3rem;
+    max-width: 15ch;
+}
+
+.lead {
+    font-size: 1.05rem;
+    max-width: 62ch;
+    color: #40453b;
+}
+
+/* Esquema de nodos (bache, luminaria, basura, semáforo) */
+
+.esquema {
+    margin: 32px 0 8px;
+    overflow-x: auto;
+}
+
+.esquema svg { display: block; min-width: 560px; width: 100%; height: auto; }
+
+/* ---------- Bitácora de actores ---------- */
+
+.seccion { padding: 32px 0; }
+
+.seccion-titulo {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+}
+
+.seccion-intro {
+    color: #565b4f;
+    max-width: 60ch;
+    margin-bottom: 20px;
+}
+
+.bitacora {
+    border-top: 1px solid var(--linea);
+}
+
+.fila-actor {
+    display: grid;
+    grid-template-columns: 14px 180px 1fr;
+    gap: 20px;
+    align-items: start;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--linea);
+}
+
+.fila-actor .etiqueta {
+    width: 12px;
+    height: 12px;
+    margin-top: 6px;
+    border-radius: 2px;
+}
+
+.fila-actor .etiqueta.ambar { background: var(--ambar); }
+.fila-actor .etiqueta.azul { background: var(--azul-ruta); }
+.fila-actor .etiqueta.verde { background: var(--verde-municipal); }
+
+.fila-actor h3 {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.fila-actor p { margin: 0; color: #40453b; }
+
+/* ---------- Proceso (secuencia real: sí usa numeración) ---------- */
+
+.proceso {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    border-top: 1px solid var(--linea);
+    padding-top: 24px;
+}
+
+.paso .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--ambar);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.paso h3 { font-size: 0.95rem; margin-bottom: 4px; }
+.paso p { margin: 0; font-size: 0.9rem; color: #565b4f; }
+
+/* ---------- Aviso / nota ---------- */
+
+.nota {
+    border: 1px solid var(--linea);
+    border-left: 3px solid var(--azul-ruta);
+    background: var(--papel);
+    padding: 14px 18px;
+    font-size: 0.92rem;
+    margin-top: 12px;
+}
+
+.nota code {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--concreto);
+    padding: 1px 6px;
+    border-radius: 3px;
+}
+
+/* ---------- Página "acerca" ---------- */
+
+.hero-secundario { padding: 48px 0 12px; }
+
+.contenido-texto {
+    max-width: 62ch;
+    padding-bottom: 24px;
+}
+
+.contenido-texto p { margin: 0 0 1em; }
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+    background: var(--asfalto);
+    color: #a9ad9e;
+    font-size: 0.85rem;
+}
+
+.site-footer .contenedor { padding: 18px 24px; }
+
+/* ---------- Página 404 ---------- */
+
+.pagina-404 {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--concreto);
+    padding: 24px;
+}
+
+.senal-404 {
+    background: var(--asfalto);
+    border: 4px solid var(--ambar);
+    border-radius: 6px;
+    padding: 18px 36px;
+    margin-bottom: 24px;
+}
+
+.senal-404 .codigo {
+    font-family: 'Overpass', Arial, sans-serif;
+    font-weight: 800;
+    font-size: 3.2rem;
+    color: var(--papel);
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.pagina-404 h1 { font-size: 1.3rem; max-width: 26ch; }
+
+.pagina-404 p {
+    max-width: 46ch;
+    color: #40453b;
+    margin-bottom: 24px;
+}
+
+.boton {
+    display: inline-block;
+    padding: 11px 26px;
+    background: var(--azul-ruta);
+    color: var(--papel);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.boton:hover,
+.boton:focus-visible {
+    background: var(--asfalto);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+    .site-header .contenedor { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .hero h1 { font-size: 1.7rem; }
+    .fila-actor {
+        grid-template-columns: 12px 1fr;
+        grid-template-areas: "etiqueta rol" "etiqueta desc";
+    }
+    .fila-actor .etiqueta { grid-area: etiqueta; }
+    .fila-actor .rol { grid-area: rol; }
+    .fila-actor p { grid-area: desc; }
+    .proceso { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+}

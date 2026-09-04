@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Inicio · {{ nombre_proyecto }}{% endblock %}
+
+{% block contenido %}
+<section class="hero">
+    <span class="ficha mono">Evaluación n°1 - Proyecto municipal</span>
+    <h1>Reporta, sigue y resuelve incidencias urbanas en un solo lugar</h1>
+    <p class="lead">{{ descripcion }}</p>
+
+    <div class="esquema" aria-hidden="true">
+        <svg viewBox="0 0 600 100" xmlns="http://www.w3.org/2000/svg">
+            <line x1="40" y1="42" x2="560" y2="42" stroke="#d8d8ce" stroke-width="2"/>
+            <circle cx="100" cy="42" r="7" fill="#f2a71b"/>
+            <circle cx="233" cy="42" r="7" fill="#1d4e89"/>
+            <circle cx="366" cy="42" r="7" fill="#3f6c51"/>
+            <circle cx="500" cy="42" r="7" fill="#f2a71b"/>
+            <text x="100" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#40453b">Bache</text>
+            <text x="233" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#40453b">Luminaria</text>
+            <text x="366" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#40453b">Basura</text>
+            <text x="500" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#40453b">Semáforo</text>
+        </svg>
+    </div>
+</section>
+
+<section class="seccion">
+    <h2 class="seccion-titulo">Quiénes participan</h2>
+    <p class="seccion-intro">Cada incidencia pasa por distintos actores hasta quedar resuelta y registrada.</p>
+
+    <div class="bitacora">
+        <div class="fila-actor">
+            <span class="etiqueta ambar"></span>
+            <div class="rol"><h3>Ciudadanos</h3></div>
+            <p>Reportan incidencias urbanas y consultan el estado de sus solicitudes.</p>
+        </div>
+        <div class="fila-actor">
+            <span class="etiqueta azul"></span>
+            <div class="rol"><h3>Gestores municipales</h3></div>
+            <p>Validan reglas de negocio, gestionan estados y coordinan la resolución.</p>
+        </div>
+        <div class="fila-actor">
+            <span class="etiqueta verde"></span>
+            <div class="rol"><h3>Auditoría</h3></div>
+            <p>Cada cambio de estado queda registrado para trazabilidad y control.</p>
+        </div>
+    </div>
+</section>
+
+<section class="seccion">
+    <h2 class="seccion-titulo">Cómo funciona</h2>
+    <div class="proceso">
+        <div class="paso">
+            <span class="num">01</span>
+            <h3>Reporta</h3>
+            <p>El ciudadano registra la incidencia con su ubicación y categoría.</p>
+        </div>
+        <div class="paso">
+            <span class="num">02</span>
+            <h3>Valida</h3>
+            <p>Un gestor municipal revisa y aplica las reglas de negocio.</p>
+        </div>
+        <div class="paso">
+            <span class="num">03</span>
+            <h3>Actualiza</h3>
+            <p>El estado de la incidencia cambia y queda visible para el ciudadano.</p>
+        </div>
+        <div class="paso">
+            <span class="num">04</span>
+            <h3>Audita</h3>
+            <p>Todo cambio de estado queda registrado con fecha y responsable.</p>
+        </div>
+    </div>
+</section>
+
+<div class="nota">
+    Probar ingresar a una URL que no existe para ver la página de error 404 personalizada.
+</div>
+{% endblock %}

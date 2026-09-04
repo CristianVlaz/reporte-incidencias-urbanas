@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Reporte de Incidencias Urbanas{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="contenedor">
+            <a href="{% url 'incidencias_app:home' %}" class="marca">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 2C8 2 5 5.2 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.8-3-7-7-7Z" stroke="#F2A71B" stroke-width="1.8" fill="none"/>
+                    <circle cx="12" cy="9" r="2.4" fill="#F2A71B"/>
+                </svg>
+                Incidencias Urbanas
+            </a>
+            <nav>
+                <a href="{% url 'incidencias_app:home' %}">Inicio</a>
+                <a href="{% url 'incidencias_app:acerca' %}">Acerca del proyecto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="contenedor">
+            <p>Municipalidad. Programación Backend, INACAP 2026.</p>
+        </div>
+    </footer>
+</body>
+</html>
