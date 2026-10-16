@@ -1,105 +1,72 @@
-# Sistema de Reporte de Incidencias Urbanas
+# Sistema de Reporte de Incidencias Urbanas — Evaluación 2
 
-Proyecto 30 - Programación Backend, INACAP 2026.
+Continuación **del proyecto original de la Evaluación 1**, para la asignatura Programación Backend (INACAP 2026). Mantiene sus páginas `/`, `/acerca/` y su plantilla 404.
 
-## Descripción
+## Alcance
+- ORM Django: `Categoria`, `Estado`, `Incidencia`, `HistorialEstado`.
+- Relaciones: cada incidencia pertenece a una categoría y a un estado; tiene múltiples registros en su historial.
+- Django REST Framework: serializers + ModelViewSet + DefaultRouter.
+- CRUD completo para **Categoría, Estado e Incidencia** mediante GET, POST, PUT, PATCH y DELETE.
+- Historial de estados consultable en GET y actualizado automáticamente al crear o cambiar el estado de una incidencia mediante API o Django Admin. **Es solo lectura por diseño** para evitar falsificar la auditoría.
+- MySQL con tres scripts SQL. Variables de entorno gestionadas mediante `python-decouple`.
+- Datos semilla (fixtures), migración inicial y tests.
 
-La Municipalidad necesita digitalizar la gestión de incidencias urbanas. Esta
-plataforma centralizará la información hoy distribuida en distintos
-registros, permitiendo a ciudadanos y gestores municipales operar sobre los
-reportes, mantener históricos, controlar situaciones excepcionales y auditar
-los cambios de estado.
+## Instalación
+Sigue primero **`GUIA_INSTALACION_WINDOWS.md`**, que incluye cada clic/orden de instalación y una guía de demostración.
 
-Esta primera entrega (**Evaluación 1**) construye la base técnica del
-backend: repositorio Git, ambiente virtual, núcleo Django y una aplicación
-(`incidencias_app`) con rutas propias, página de bienvenida y página de
-error 404 personalizada. El modelo de datos y el CRUD se incorporan en la
-siguiente evaluación.
-
-## Requisitos previos
-
-- Python 3.11 o superior
-- Git
-- Un editor de código (recomendado: Visual Studio Code)
-
-## Instalación y ejecución
-
-1. Clonar el repositorio:
-   ```bash
-   git clone <URL_DE_TU_REPOSITORIO>
-   cd <carpeta_del_proyecto>
-   ```
-
-2. Crear el ambiente virtual:
-   ```bash
-   python -m venv .venv
-   ```
-
-3. Activar el ambiente virtual:
-   - **Windows (PowerShell):**
-     ```powershell
-     .venv\Scripts\Activate
-     ```
-     Si aparece un error de permisos, ejecutar una vez:
-     ```powershell
-     Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-     ```
-   - **Windows (CMD):**
-     ```cmd
-     .venv\Scripts\activate.bat
-     ```
-   - **macOS / Linux:**
-     ```bash
-     source .venv/bin/activate
-     ```
-
-4. Instalar las dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-5. Ejecutar el servidor de desarrollo:
-   ```bash
-   python manage.py runserver
-   ```
-
-6. Abrir en el navegador:
-   - Página de bienvenida: http://127.0.0.1:8000/
-   - Acerca del proyecto: http://127.0.0.1:8000/acerca/
-   - Página 404: ingresar cualquier URL inexistente, por ejemplo
-     http://127.0.0.1:8000/no-existe/
-
-Para desactivar el ambiente virtual cuando termines:
-```bash
-deactivate
+## Arquitectura
+```text
+core/                  settings.py, urls.py
+incidencias_app/       models.py, admin.py, views.py, urls.py (páginas anteriores)
+                       serializers.py, api_views.py, api_urls.py
+                       migrations/0001_initial.py
+                       fixtures/datos_iniciales.json, tests.py
+sql/                   01_crear_base_datos.sql, 02_crear_usuario.sql, 03_asignar_permisos.sql
+templates/             páginas HTML originales
+static/                CSS original
+.env.example           plantilla de configuración; copiar a .env (no subir)
+requirements.txt       dependencias
 ```
 
-## Estructura del proyecto
+## Endpoints
+| URL | GET lista | POST | GET detalle | PUT | PATCH | DELETE |
+|---|---|---|---|---|---|---|
+| `/api/categorias/` | Sí | Sí | `/api/categorias/<id>/` | Sí | Sí | Sí |
+| `/api/estados/` | Sí | Sí | `/api/estados/<id>/` | Sí | Sí | Sí |
+| `/api/incidencias/` | Sí | Sí | `/api/incidencias/<id>/` | Sí | Sí | Sí |
+| `/api/historial-estados/` | Sí | No | `/api/historial-estados/<id>/` | No | No | No |
 
+Nota: las rutas de lista aceptan GET y POST; los métodos PUT/PATCH/DELETE operan sobre la URL de detalle terminada en `/id/`.
+
+## Ejemplos de datos
+Crear una incidencia con `POST /api/incidencias/`:
+```json
+{
+  "titulo": "Luminaria apagada", "descripcion": "La luz no enciende hace dos días",
+  "direccion": "Av. Principal 123", "comuna": "Temuco",
+  "categoria": 2, "estado": 1, "prioridad": "alta",
+  "nombre_reportante": "Vecino de prueba", "correo_reportante": "vecino@example.com"
+}
 ```
-├── core/                  # Núcleo del proyecto Django (configuración, urls raíz)
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│   └── asgi.py
-├── incidencias_app/       # Aplicación del proyecto
-│   ├── views.py           # Vista de bienvenida y vista "acerca"
-│   ├── urls.py            # Rutas propias de la app
-│   ├── models.py          # (se completa en la Evaluación 2)
-│   └── admin.py
-├── templates/              # Plantillas HTML (base, home, acerca, 404)
-├── static/css/style.css    # Estilos del sitio
-├── requirements.txt
-├── manage.py
-└── .gitignore
+Los IDs de categorías/estados del ejemplo asumen que se cargó `datos_iniciales.json` en una base vacía. Verificar con GET antes de usar.
+
+## Comandos rápidos
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+# Editar .env, y ejecutar los SQL antes de migrar (MySQL).
+python manage.py check
+python manage.py migrate
+python manage.py loaddata datos_iniciales
+python manage.py createsuperuser
+python manage.py test
+python manage.py runserver
 ```
 
-## Notas para la evaluación
+## Precauciones
+Esta API es para **demostración local**, con permisos de escritura abiertos por diseño académico. **No publicar en Internet** sin autenticación/autorización, HTTPS, validaciones y ajustes de seguridad. `.env`, claves y base de datos local no se suben a GitHub.
 
-- El proyecto se ejecuta dentro de un ambiente virtual propio (`.venv`), que
-  no se sube al repositorio.
-- La ruta raíz (`core/urls.py`) delega a `incidencias_app/urls.py` mediante
-  `include()`, cumpliendo con el requisito de rutas propias de la aplicación.
-- La página 404 solo se muestra personalizada cuando `DEBUG = False` en
-  `core/settings.py`. Recuerda dejarla en `False` al momento de demostrarla
-  al profesor.
+## Entrega pendiente del estudiante
+El ZIP incluye código, scripts y migración, pero debes **instalar dependencias, crear/ejecutar la base de datos MySQL en tu PC, ejecutar pruebas y migraciones**, subir a TU repositorio y aportar la URL real junto con capturas de evidencia. Se adjunta `CHECKLIST_ENTREGA.md`.

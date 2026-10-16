@@ -1,0 +1,9 @@
+[
+  {"model":"incidencias_app.categoria","pk":1,"fields":{"nombre":"Baches","descripcion":"Daños en calzadas","activo":true,"created_at":"2026-01-01T12:00:00Z","updated_at":"2026-01-01T12:00:00Z"}},
+  {"model":"incidencias_app.categoria","pk":2,"fields":{"nombre":"Alumbrado público","descripcion":"Luminarias averiadas","activo":true,"created_at":"2026-01-01T12:00:00Z","updated_at":"2026-01-01T12:00:00Z"}},
+  {"model":"incidencias_app.categoria","pk":3,"fields":{"nombre":"Basura","descripcion":"Acumulación de residuos","activo":true,"created_at":"2026-01-01T12:00:00Z","updated_at":"2026-01-01T12:00:00Z"}},
+  {"model":"incidencias_app.categoria","pk":4,"fields":{"nombre":"Semáforos","descripcion":"Fallas de señalización vial","activo":true,"created_at":"2026-01-01T12:00:00Z","updated_at":"2026-01-01T12:00:00Z"}},
+  {"model":"incidencias_app.estado","pk":1,"fields":{"nombre":"Pendiente","descripcion":"Sin gestionar","es_final":false,"created_at":"2026-01-01T12:00:00Z","updated_at":"2026-01-01T12:00:00Z"}},
+  {"model":"incidencias_app.estado","pk":2,"fields":{"nombre":"En proceso","descripcion":"Equipo asignado","es_final":false,"created_at":"2026-01-01T12:00:00Z","updated_at":"2026-01-01T12:00:00Z"}},
+  {"model":"incidencias_app.estado","pk":3,"fields":{"nombre":"Resuelta","descripcion":"Atención completada","es_final":true,"created_at":"2026-01-01T12:00:00Z","updated_at":"2026-01-01T12:00:00Z"}}
+]
