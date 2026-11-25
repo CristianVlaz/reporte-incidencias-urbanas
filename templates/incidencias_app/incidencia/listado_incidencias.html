@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Listado de Incidencias{% endblock %}
+
+{% block contenido %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <div>
+        <h1 class="h3 mb-0">Incidencias Urbanas</h1>
+        <p class="text-muted small mb-0">Gestión completa de reportes ciudadanos y seguimiento de estados.</p>
+    </div>
+    <a href="{% url 'incidencias_app:incidencia_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Nueva Incidencia
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Categoría</th>
+                    <th>Estado</th>
+                    <th>Prioridad</th>
+                    <th>Comuna</th>
+                    <th>Fecha reporte</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for incidencia in incidencias %}
+                <tr>
+                    <td class="fw-semibold">#{{ incidencia.id }}</td>
+                    <td>
+                        <a href="{% url 'incidencias_app:incidencia_detail' incidencia.pk %}" class="text-decoration-none fw-semibold">
+                            {{ incidencia.titulo }}
+                        </a>
+                        <div class="small text-muted">{{ incidencia.direccion }}</div>
+                    </td>
+                    <td>{{ incidencia.categoria.nombre }}</td>
+                    <td>
+                        <span class="badge {% if incidencia.estado.es_final %}bg-success{% else %}bg-info text-dark{% endif %}">
+                            {{ incidencia.estado.nombre }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge {% if incidencia.prioridad == 'critica' %}bg-danger{% elif incidencia.prioridad == 'alta' %}bg-warning text-dark{% elif incidencia.prioridad == 'media' %}bg-primary{% else %}bg-secondary{% endif %}">
+                            {{ incidencia.get_prioridad_display }}
+                        </span>
+                    </td>
+                    <td>{{ incidencia.comuna }}</td>
+                    <td class="small">{{ incidencia.fecha_reporte|date:"d/m/Y H:i" }}</td>
+                    <td class="text-end text-nowrap">
+                        <a href="{% url 'incidencias_app:incidencia_detail' incidencia.pk %}" class="btn btn-sm btn-outline-info" title="Ver detalle">
+                            <i class="bi bi-eye"></i> Detalle
+                        </a>
+                        <a href="{% url 'incidencias_app:incidencia_update' incidencia.pk %}" class="btn btn-sm btn-outline-primary" title="Editar">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a href="{% url 'incidencias_app:incidencia_delete' incidencia.pk %}" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center py-4 text-muted">
+                        No hay incidencias registradas todavía.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

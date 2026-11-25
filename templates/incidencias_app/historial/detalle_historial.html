@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Detalle de Auditoría #{{ registro.id }}{% endblock %}
+
+{% block contenido %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Registro de Auditoría #{{ registro.id }}</h1>
+    <a href="{% url 'incidencias_app:historial_list' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left"></i> Volver al historial
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">ID de auditoría</dt>
+            <dd class="col-sm-9">#{{ registro.id }}</dd>
+
+            <dt class="col-sm-3">Incidencia asociada</dt>
+            <dd class="col-sm-9">
+                <a href="{% url 'incidencias_app:incidencia_detail' registro.incidencia.pk %}">
+                    #{{ registro.incidencia.id }} — {{ registro.incidencia.titulo }}
+                </a>
+            </dd>
+
+            <dt class="col-sm-3">Estado anterior</dt>
+            <dd class="col-sm-9">{{ registro.estado_anterior.nombre|default:"Estado inicial (sin estado previo)" }}</dd>
+
+            <dt class="col-sm-3">Estado nuevo</dt>
+            <dd class="col-sm-9"><span class="badge bg-primary">{{ registro.estado_nuevo.nombre }}</span></dd>
+
+            <dt class="col-sm-3">Observación</dt>
+            <dd class="col-sm-9">{{ registro.observacion|default:"Sin observación" }}</dd>
+
+            <dt class="col-sm-3">Fecha y hora</dt>
+            <dd class="col-sm-9">{{ registro.fecha_cambio|date:"d/m/Y H:i:s" }}</dd>
+        </dl>
+    </div>
+</div>
+{% endblock %}

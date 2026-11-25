@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Eliminar Incidencia #{{ incidencia.id }}{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-danger shadow-sm">
+            <div class="card-header bg-danger text-white fw-semibold">
+                <i class="bi bi-exclamation-triangle-fill"></i> Confirmar eliminación
+            </div>
+            <div class="card-body p-4">
+                <p>¿Estás seguro de que deseas eliminar la siguiente incidencia?</p>
+                <div class="p-3 bg-light rounded mb-3">
+                    <strong>#{{ incidencia.id }} — {{ incidencia.titulo }}</strong><br>
+                    <span class="small text-muted">{{ incidencia.direccion }}, {{ incidencia.comuna }} · {{ incidencia.categoria.nombre }}</span>
+                </div>
+                <p class="small text-danger mb-4">
+                    Esta acción eliminará también el historial de estados asociado a esta incidencia y no se puede deshacer.
+                </p>
+                <form method="post" class="d-flex gap-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Sí, eliminar incidencia
+                    </button>
+                    <a href="{% url 'incidencias_app:incidencia_list' %}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

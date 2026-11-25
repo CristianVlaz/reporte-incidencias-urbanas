@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Detalle Incidencia #{{ incidencia.id }}{% endblock %}
+
+{% block contenido %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <h1 class="h3 mb-0">Incidencia #{{ incidencia.id }}: {{ incidencia.titulo }}</h1>
+    <div class="d-flex gap-2">
+        <a href="{% url 'incidencias_app:incidencia_update' incidencia.pk %}" class="btn btn-primary btn-sm">
+            <i class="bi bi-pencil"></i> Editar
+        </a>
+        <a href="{% url 'incidencias_app:incidencia_delete' incidencia.pk %}" class="btn btn-danger btn-sm">
+            <i class="bi bi-trash"></i> Eliminar
+        </a>
+        <a href="{% url 'incidencias_app:incidencia_list' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white fw-semibold">Información general</div>
+            <div class="card-body">
+                <p class="mb-3">{{ incidencia.descripcion }}</p>
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Dirección</dt>
+                    <dd class="col-sm-8">{{ incidencia.direccion }}</dd>
+
+                    <dt class="col-sm-4">Comuna</dt>
+                    <dd class="col-sm-8">{{ incidencia.comuna }}</dd>
+
+                    <dt class="col-sm-4">Categoría</dt>
+                    <dd class="col-sm-8">
+                        <a href="{% url 'incidencias_app:categoria_detail' incidencia.categoria.pk %}">
+                            {{ incidencia.categoria.nombre }}
+                        </a>
+                    </dd>
+
+                    <dt class="col-sm-4">Estado actual</dt>
+                    <dd class="col-sm-8">
+                        <a href="{% url 'incidencias_app:estado_detail' incidencia.estado.pk %}" class="badge {% if incidencia.estado.es_final %}bg-success{% else %}bg-info text-dark{% endif %} text-decoration-none">
+                            {{ incidencia.estado.nombre }}
+                        </a>
+                    </dd>
+
+                    <dt class="col-sm-4">Prioridad</dt>
+                    <dd class="col-sm-8">{{ incidencia.get_prioridad_display }}</dd>
+
+                    <dt class="col-sm-4">Reportante</dt>
+                    <dd class="col-sm-8">{{ incidencia.nombre_reportante }}</dd>
+
+                    <dt class="col-sm-4">Correo de contacto</dt>
+                    <dd class="col-sm-8">{{ incidencia.correo_reportante|default:"No informado" }}</dd>
+
+                    <dt class="col-sm-4">Fecha de reporte</dt>
+                    <dd class="col-sm-8">{{ incidencia.fecha_reporte|date:"d/m/Y H:i" }}</dd>
+
+                    <dt class="col-sm-4">Última actualización</dt>
+                    <dd class="col-sm-8">{{ incidencia.fecha_actualizacion|date:"d/m/Y H:i" }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white fw-semibold">Historial de cambios de estado</div>
+            <ul class="list-group list-group-flush">
+                {% for cambio in incidencia.historial_estados.all %}
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted">{{ cambio.fecha_cambio|date:"d/m/Y H:i" }}</small>
+                        <a href="{% url 'incidencias_app:historial_detail' cambio.pk %}" class="small">Ver registro</a>
+                    </div>
+                    <div class="fw-semibold small">
+                        {{ cambio.estado_anterior.nombre|default:"Inicio" }} → {{ cambio.estado_nuevo.nombre }}
+                    </div>
+                    {% if cambio.observacion %}
+                    <div class="small text-muted">{{ cambio.observacion }}</div>
+                    {% endif %}
+                </li>
+                {% empty %}
+                <li class="list-group-item text-muted small">Sin cambios de estado registrados.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

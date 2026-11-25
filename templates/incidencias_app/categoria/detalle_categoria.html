@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Detalle Categoría · {{ categoria.nombre }}{% endblock %}
+
+{% block contenido %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <h1 class="h3 mb-0">Categoría: {{ categoria.nombre }}</h1>
+    <div class="d-flex gap-2">
+        <a href="{% url 'incidencias_app:categoria_update' categoria.pk %}" class="btn btn-primary btn-sm">
+            <i class="bi bi-pencil"></i> Editar
+        </a>
+        <a href="{% url 'incidencias_app:categoria_delete' categoria.pk %}" class="btn btn-danger btn-sm">
+            <i class="bi bi-trash"></i> Eliminar
+        </a>
+        <a href="{% url 'incidencias_app:categoria_list' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">#{{ categoria.id }}</dd>
+
+            <dt class="col-sm-3">Nombre</dt>
+            <dd class="col-sm-9">{{ categoria.nombre }}</dd>
+
+            <dt class="col-sm-3">Descripción</dt>
+            <dd class="col-sm-9">{{ categoria.descripcion|default:"Sin descripción" }}</dd>
+
+            <dt class="col-sm-3">Estado</dt>
+            <dd class="col-sm-9">
+                {% if categoria.activo %}<span class="badge bg-success">Activa</span>{% else %}<span class="badge bg-secondary">Inactiva</span>{% endif %}
+            </dd>
+
+            <dt class="col-sm-3">Creación</dt>
+            <dd class="col-sm-9">{{ categoria.created_at|date:"d/m/Y H:i" }}</dd>
+
+            <dt class="col-sm-3">Actualización</dt>
+            <dd class="col-sm-9">{{ categoria.updated_at|date:"d/m/Y H:i" }}</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white fw-semibold">Incidencias asociadas ({{ categoria.incidencias.count }})</div>
+    <ul class="list-group list-group-flush">
+        {% for inc in categoria.incidencias.all %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'incidencias_app:incidencia_detail' inc.pk %}" class="text-decoration-none">
+                #{{ inc.id }} — {{ inc.titulo }}
+            </a>
+            <span class="badge bg-secondary">{{ inc.estado.nombre }}</span>
+        </li>
+        {% empty %}
+        <li class="list-group-item text-muted small">No existen incidencias asociadas a esta categoría.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

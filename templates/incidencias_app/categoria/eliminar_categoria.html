@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Eliminar Categoría · {{ categoria.nombre }}{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-danger shadow-sm">
+            <div class="card-header bg-danger text-white fw-semibold">
+                <i class="bi bi-exclamation-triangle-fill"></i> Confirmar eliminación
+            </div>
+            <div class="card-body p-4">
+                <p>¿Estás seguro de que deseas eliminar la categoría <strong>{{ categoria.nombre }}</strong>?</p>
+                <p class="small text-muted mb-4">
+                    Por integridad referencial (<code>PROTECT</code>), solo podrá eliminarse si no tiene incidencias asociadas.
+                </p>
+                <form method="post" class="d-flex gap-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Sí, eliminar categoría
+                    </button>
+                    <a href="{% url 'incidencias_app:categoria_list' %}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

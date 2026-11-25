@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Listado de Estados{% endblock %}
+
+{% block contenido %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <div>
+        <h1 class="h3 mb-0">Estados de Incidencias</h1>
+        <p class="text-muted small mb-0">Etapas del ciclo de vida de una incidencia urbana.</p>
+    </div>
+    <a href="{% url 'incidencias_app:estado_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Nuevo Estado
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Tipo</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for estado in estados %}
+                <tr>
+                    <td class="fw-semibold">#{{ estado.id }}</td>
+                    <td>
+                        <a href="{% url 'incidencias_app:estado_detail' estado.pk %}" class="text-decoration-none fw-semibold">
+                            {{ estado.nombre }}
+                        </a>
+                    </td>
+                    <td class="text-muted">{{ estado.descripcion|default:"—"|truncatechars:80 }}</td>
+                    <td>
+                        {% if estado.es_final %}
+                            <span class="badge bg-success">Estado final</span>
+                        {% else %}
+                            <span class="badge bg-info text-dark">En curso</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end text-nowrap">
+                        <a href="{% url 'incidencias_app:estado_detail' estado.pk %}" class="btn btn-sm btn-outline-info">
+                            <i class="bi bi-eye"></i> Detalle
+                        </a>
+                        <a href="{% url 'incidencias_app:estado_update' estado.pk %}" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a href="{% url 'incidencias_app:estado_delete' estado.pk %}" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">No hay estados registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

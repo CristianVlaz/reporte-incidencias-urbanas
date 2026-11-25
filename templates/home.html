@@ -3,76 +3,86 @@
 {% block titulo %}Inicio · {{ nombre_proyecto }}{% endblock %}
 
 {% block contenido %}
-<section class="hero">
-    <span class="ficha mono">Evaluación n°1 - Proyecto municipal</span>
-    <h1>Reporta, sigue y resuelve incidencias urbanas en un solo lugar</h1>
-    <p class="lead">{{ descripcion }}</p>
-
-    <div class="esquema" aria-hidden="true">
-        <svg viewBox="0 0 600 100" xmlns="http://www.w3.org/2000/svg">
-            <line x1="40" y1="42" x2="560" y2="42" stroke="#d8d8ce" stroke-width="2"/>
-            <circle cx="100" cy="42" r="7" fill="#f2a71b"/>
-            <circle cx="233" cy="42" r="7" fill="#1d4e89"/>
-            <circle cx="366" cy="42" r="7" fill="#3f6c51"/>
-            <circle cx="500" cy="42" r="7" fill="#f2a71b"/>
-            <text x="100" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#40453b">Bache</text>
-            <text x="233" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#40453b">Luminaria</text>
-            <text x="366" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#40453b">Basura</text>
-            <text x="500" y="72" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#40453b">Semáforo</text>
-        </svg>
+<section class="hero-card p-4 p-md-5 mb-4 shadow-sm">
+    <span class="badge bg-warning text-dark mb-3">Proyecto Municipal N.º 30 · Evaluación 3</span>
+    <h1 class="display-6 fw-bold mb-3">{{ nombre_proyecto }}</h1>
+    <p class="lead mb-4">{{ descripcion }}</p>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'incidencias_app:incidencia_create' %}" class="btn btn-warning fw-semibold">
+            <i class="bi bi-plus-circle"></i> Reportar incidencia
+        </a>
+        <a href="{% url 'incidencias_app:incidencia_list' %}" class="btn btn-light">
+            <i class="bi bi-list-ul"></i> Ver incidencias
+        </a>
+        <a href="{% url 'incidencias_app:historial_list' %}" class="btn btn-outline-light">
+            <i class="bi bi-clock-history"></i> Ver historial de auditoría
+        </a>
     </div>
 </section>
 
-<section class="seccion">
-    <h2 class="seccion-titulo">Quiénes participan</h2>
-    <p class="seccion-intro">Cada incidencia pasa por distintos actores hasta quedar resuelta y registrada.</p>
-
-    <div class="bitacora">
-        <div class="fila-actor">
-            <span class="etiqueta ambar"></span>
-            <div class="rol"><h3>Ciudadanos</h3></div>
-            <p>Reportan incidencias urbanas y consultan el estado de sus solicitudes.</p>
-        </div>
-        <div class="fila-actor">
-            <span class="etiqueta azul"></span>
-            <div class="rol"><h3>Gestores municipales</h3></div>
-            <p>Validan reglas de negocio, gestionan estados y coordinan la resolución.</p>
-        </div>
-        <div class="fila-actor">
-            <span class="etiqueta verde"></span>
-            <div class="rol"><h3>Auditoría</h3></div>
-            <p>Cada cambio de estado queda registrado para trazabilidad y control.</p>
+<section class="row g-3 mb-4">
+    <div class="col-sm-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted small">Incidencias registradas</div>
+                <div class="display-6 fw-bold text-primary">{{ total_incidencias }}</div>
+                <a href="{% url 'incidencias_app:incidencia_list' %}" class="stretched-link text-decoration-none small">Gestionar incidencias →</a>
+            </div>
         </div>
     </div>
-</section>
-
-<section class="seccion">
-    <h2 class="seccion-titulo">Cómo funciona</h2>
-    <div class="proceso">
-        <div class="paso">
-            <span class="num">01</span>
-            <h3>Reporta</h3>
-            <p>El ciudadano registra la incidencia con su ubicación y categoría.</p>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted small">Categorías urbanas</div>
+                <div class="display-6 fw-bold text-success">{{ total_categorias }}</div>
+                <a href="{% url 'incidencias_app:categoria_list' %}" class="stretched-link text-decoration-none small">Gestionar categorías →</a>
+            </div>
         </div>
-        <div class="paso">
-            <span class="num">02</span>
-            <h3>Valida</h3>
-            <p>Un gestor municipal revisa y aplica las reglas de negocio.</p>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted small">Estados del flujo</div>
+                <div class="display-6 fw-bold text-warning">{{ total_estados }}</div>
+                <a href="{% url 'incidencias_app:estado_list' %}" class="stretched-link text-decoration-none small">Gestionar estados →</a>
+            </div>
         </div>
-        <div class="paso">
-            <span class="num">03</span>
-            <h3>Actualiza</h3>
-            <p>El estado de la incidencia cambia y queda visible para el ciudadano.</p>
-        </div>
-        <div class="paso">
-            <span class="num">04</span>
-            <h3>Audita</h3>
-            <p>Todo cambio de estado queda registrado con fecha y responsable.</p>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted small">Cambios auditados</div>
+                <div class="display-6 fw-bold text-secondary">{{ total_historial }}</div>
+                <a href="{% url 'incidencias_app:historial_list' %}" class="stretched-link text-decoration-none small">Consultar historial →</a>
+            </div>
         </div>
     </div>
 </section>
 
-<div class="nota">
-    Probar ingresar a una URL que no existe para ver la página de error 404 personalizada.
-</div>
+<section class="row g-3">
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-people-fill text-warning me-2"></i>Ciudadanos</h5>
+                <p class="card-text text-muted mb-0">Reportan incidencias urbanas con ubicación, categoría y prioridad, y consultan su avance.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-building-gear text-primary me-2"></i>Gestores municipales</h5>
+                <p class="card-text text-muted mb-0">Administran categorías, actualizan estados y coordinan la atención en terreno.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-shield-check text-success me-2"></i>Auditoría histórica</h5>
+                <p class="card-text text-muted mb-0">Cada cambio de estado queda registrado automáticamente en un historial de solo lectura.</p>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

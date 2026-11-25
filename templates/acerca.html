@@ -1,28 +1,26 @@
 {% extends 'base.html' %}
 
-{% block titulo %}Acerca del proyecto{% endblock %}
+{% block titulo %}Acerca del proyecto · {{ nombre_proyecto }}{% endblock %}
 
 {% block contenido %}
-<section class="hero-secundario">
-    <span class="ficha mono">Proyecto municipal N.º 30</span>
-    <h1>Acerca del proyecto</h1>
-</section>
-
-<section class="contenido-texto">
-    <p>
-        La Municipalidad necesita digitalizar la gestión de incidencias urbanas.
-        Actualmente gran parte de la información se mantiene distribuida en
-        distintos registros, lo que dificulta el seguimiento de operaciones,
-        la generación de reportes y la coordinación entre los distintos
-        actores involucrados.
-    </p>
-    <p>
-        Esta primera etapa del proyecto (Evaluación 1) entrega la base técnica:
-        repositorio Git, ambiente virtual, núcleo Django y la aplicación
-        <strong>incidencias_app</strong> con sus rutas propias, página de
-        bienvenida y página de error 404 personalizada. El modelo de datos y
-        las funcionalidades de registro, consulta e indicadores se
-        incorporarán en la siguiente etapa.
-    </p>
-</section>
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+        <span class="badge bg-primary mb-2">Proyecto municipal N.º 30</span>
+        <h1 class="h3 fw-bold mb-3">Acerca del proyecto</h1>
+        <p>
+            La Municipalidad necesita digitalizar la gestión de incidencias urbanas para
+            centralizar la información, facilitar el seguimiento de operaciones, mantener datos
+            históricos consistentes y coordinar a ciudadanos y gestores municipales.
+        </p>
+        <p>
+            El sistema integra las tres etapas acumulativas de la asignatura: estructura base y
+            vista pública (Evaluación 1), modelo ORM en MySQL y API REST con Django REST Framework
+            (Evaluación 2), y CRUD web completo mediante Vistas Basadas en Clases (CBV) nativas de
+            Django y formularios <code>ModelForm</code> con widgets personalizados (Evaluación 3).
+        </p>
+        <a href="{% url 'incidencias_app:home' %}" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-arrow-left"></i> Volver al inicio
+        </a>
+    </div>
+</div>
 {% endblock %}
